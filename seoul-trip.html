@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<title>首爾五日輕旅行 · 09.03–09.07</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@600;700;900&family=Noto+Sans+TC:wght@400;500;700&family=IBM+Plex+Mono:wght@500;600&display=swap');
+
+  :root{
+    --ink:#0F1B2D;
+    --panel:#16273F;
+    --panel-2:#1E3350;
+    --panel-line:#2B4266;
+    --paper:#F5EFE1;
+    --paper-ink:#2A2118;
+    --text:#E9EEF5;
+    --text-soft:#9FB0C6;
+    --text-faint:#5D7492;
+    --green:#00A651;
+    --orange:#EF7C1C;
+    --yellow:#FABE00;
+    --blue:#0090D2;
+    --gray:#7A8AA0;
+    --red:#C23A2E;
+  }
+
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--ink);
+    color:var(--text);
+    font-family:'Noto Sans TC',sans-serif;
+    -webkit-font-smoothing:antialiased;
+    padding-bottom:60px;
+  }
+  .wrap{max-width:520px;margin:0 auto;padding:0 16px;}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    padding:36px 16px 20px;
+    background:
+      radial-gradient(circle at 85% -10%, rgba(0,144,210,0.25), transparent 55%),
+      radial-gradient(circle at 5% 0%, rgba(239,124,28,0.18), transparent 45%),
+      var(--ink);
+    text-align:left;
+  }
+  .eyebrow{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12px;
+    letter-spacing:.14em;
+    color:var(--text-soft);
+    text-transform:uppercase;
+  }
+  h1{
+    font-family:'Noto Serif TC',serif;
+    font-weight:900;
+    font-size:34px;
+    line-height:1.25;
+    margin:8px 0 6px;
+  }
+  .hero p{
+    color:var(--text-soft);
+    font-size:14px;
+    margin:0 0 20px;
+  }
+
+  /* subway badge nav */
+  .daynav{display:flex;gap:10px;overflow-x:auto;padding-bottom:4px;}
+  .daynav::-webkit-scrollbar{display:none;}
+  .badge-btn{
+    flex:0 0 auto;
+    display:flex;flex-direction:column;align-items:center;gap:6px;
+    background:none;border:none;cursor:pointer;
+    font-family:'Noto Sans TC',sans-serif;
+    color:var(--text-soft);
+    padding:2px;
+  }
+  .badge{
+    width:44px;height:44px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    font-family:'IBM Plex Mono',monospace;font-weight:600;font-size:17px;
+    color:#0F1B2D;
+    border:2px solid rgba(255,255,255,0.15);
+  }
+  .badge-btn span.lbl{font-size:11px;color:var(--text-soft);}
+  .b-gray .badge{background:var(--gray);}
+  .b-green .badge{background:var(--green);color:#fff;}
+  .b-orange .badge{background:var(--orange);color:#fff;}
+  .b-yellow .badge{background:var(--yellow);}
+  .b-blue .badge{background:var(--blue);color:#fff;}
+
+  /* ---------- MODE TOGGLE ---------- */
+  .mode-row{
+    display:flex;align-items:center;justify-content:space-between;
+    margin:18px 16px 8px;
+    padding:10px 14px;
+    background:var(--panel);
+    border:1px solid var(--panel-line);
+    border-radius:14px;
+  }
+  .mode-row .txt{font-size:13px;color:var(--text-soft);}
+  .mode-row .txt b{color:var(--text);font-weight:700;}
+  .switch{
+    position:relative;width:52px;height:28px;border-radius:20px;
+    background:var(--panel-2);border:1px solid var(--panel-line);
+    cursor:pointer;flex:0 0 auto;
+  }
+  .switch::after{
+    content:"";position:absolute;top:2px;left:2px;
+    width:22px;height:22px;border-radius:50%;
+    background:var(--text-soft);
+    transition:transform .2s ease, background .2s ease;
+  }
+  .switch.on{background:rgba(239,124,28,0.25);border-color:var(--orange);}
+  .switch.on::after{transform:translateX(24px);background:var(--orange);}
+
+  /* ---------- CARDS (generic) ---------- */
+  .card{
+    background:var(--panel);
+    border:1px solid var(--panel-line);
+    border-radius:18px;
+    margin:16px;
+    overflow:hidden;
+  }
+  .card-head{
+    padding:14px 16px 0;
+    font-family:'Noto Serif TC',serif;
+    font-weight:700;
+    font-size:16px;
+    display:flex;align-items:center;gap:8px;
+  }
+  .card-sub{padding:2px 16px 14px;font-size:12px;color:var(--text-soft);}
+
+  /* ---------- TICKET (boarding pass) ---------- */
+  .ticket-body{padding:0 0 16px;}
+  .stub{
+    margin:14px 16px 0;
+    background:var(--paper);
+    color:var(--paper-ink);
+    border-radius:12px;
+    padding:14px 16px;
+    position:relative;
+  }
+  .stub + .stub{margin-top:16px;}
+  .stub .route{
+    display:flex;align-items:center;justify-content:space-between;
+    font-family:'IBM Plex Mono',monospace;
+  }
+  .stub .code{font-size:26px;font-weight:600;letter-spacing:.02em;}
+  .stub .arrow{flex:1;text-align:center;color:#B08F6A;font-size:13px;padding:0 8px;}
+  .stub .city{font-size:11px;color:#7a6a54;margin-top:2px;}
+  .stub .meta{
+    display:flex;justify-content:space-between;
+    margin-top:12px;padding-top:10px;
+    border-top:1px dashed #C9BC9E;
+    font-size:11px;color:#7a6a54;
+    font-family:'IBM Plex Mono',monospace;
+  }
+  .stub .meta div b{display:block;color:var(--paper-ink);font-size:13px;font-weight:600;font-family:'Noto Sans TC',sans-serif;}
+  .stub .tag{
+    position:absolute;top:14px;right:16px;
+    font-family:'Noto Sans TC',sans-serif;
+    font-size:11px;background:rgba(0,166,81,0.12);color:#1c7a3f;
+    padding:2px 8px;border-radius:20px;
+  }
+
+  /* ---------- STAY CARD ---------- */
+  .stay-body{padding:14px 16px 16px;}
+  .stay-addr{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:14px;line-height:1.6;
+    background:var(--panel-2);
+    border:1px solid var(--panel-line);
+    border-radius:10px;padding:12px 14px;
+    margin-bottom:10px;
+  }
+  .stay-row{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap;}
+  .pill-btn{
+    flex:1;min-width:120px;
+    text-align:center;
+    padding:10px 12px;border-radius:10px;
+    background:var(--panel-2);border:1px solid var(--panel-line);
+    color:var(--text);font-size:13px;font-weight:500;
+    text-decoration:none;cursor:pointer;
+  }
+  .pill-btn:active{background:var(--panel);}
+
+  /* ---------- DAY SECTIONS ---------- */
+  .day{margin:28px 0 0;padding:0 16px;}
+  .day-head{display:flex;align-items:center;gap:12px;margin-bottom:12px;}
+  .day-head .badge{width:40px;height:40px;font-size:15px;}
+  .day-head .titles{flex:1;}
+  .day-head .date{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--text-soft);}
+  .day-head .title{font-family:'Noto Serif TC',serif;font-weight:700;font-size:19px;margin-top:1px;}
+
+  .timeline{list-style:none;margin:0;padding:0;border-left:2px solid var(--panel-line);margin-left:19px;}
+  .timeline li{
+    position:relative;padding:0 0 18px 22px;
+  }
+  .timeline li::before{
+    content:"";position:absolute;left:-7px;top:3px;
+    width:12px;height:12px;border-radius:50%;
+    background:var(--dot,var(--gray));
+    border:2px solid var(--ink);
+  }
+  .timeline .time{
+    font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--text-soft);
+  }
+  .timeline .place{font-size:15px;font-weight:700;margin:2px 0 3px;}
+  .timeline .tip{font-size:13px;color:var(--text-soft);line-height:1.55;}
+
+  .flex-list{list-style:none;margin:0 0 0 4px;padding:0;display:none;}
+  .flex-list li{
+    display:flex;align-items:center;gap:10px;
+    padding:10px 0;border-bottom:1px solid var(--panel-line);
+    font-size:14px;
+  }
+  .flex-list li:last-child{border-bottom:none;}
+  .flex-list li::before{
+    content:"";width:8px;height:8px;border-radius:50%;background:var(--dot,var(--gray));flex:0 0 auto;
+  }
+
+  body.flexible .timeline{display:none;}
+  body.flexible .flex-list{display:block;}
+
+  .note{
+    margin:12px 0 4px;
+    padding:12px 14px;
+    background:rgba(194,58,46,0.1);
+    border:1px solid rgba(194,58,46,0.35);
+    border-radius:12px;
+    font-size:13px;color:#F0C9C5;line-height:1.6;
+  }
+  .note b{color:#fff;}
+  .note.info{background:rgba(0,144,210,0.08);border-color:rgba(0,144,210,0.3);color:#BEE0F2;}
+
+  /* ---------- receipt (beauty) card ---------- */
+  .receipt{
+    margin:14px 0 4px;
+    background:linear-gradient(180deg,#2B2A5C,#1E1D40);
+    border:1px solid #3E3D72;
+    border-radius:14px;padding:16px;
+  }
+  .receipt .rh{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px;}
+  .receipt .rh b{font-family:'Noto Serif TC',serif;font-size:16px;}
+  .receipt .rh span{font-family:'IBM Plex Mono',monospace;font-size:11px;color:#B7B4E8;}
+  .receipt ul{list-style:none;margin:0;padding:0;}
+  .receipt li{
+    display:flex;justify-content:space-between;gap:10px;
+    font-size:13px;padding:6px 0;border-bottom:1px dashed #45437c;color:#DAD8F4;
+  }
+  .receipt li b{color:#fff;font-weight:600;text-align:right;white-space:nowrap;}
+  .receipt .total{
+    display:flex;justify-content:space-between;margin-top:10px;padding-top:10px;
+    border-top:1px solid #45437c;font-family:'IBM Plex Mono',monospace;
+    font-size:14px;
+  }
+
+  /* ---------- checklist ---------- */
+  .checklist-body{padding:6px 16px 16px;}
+  .chk-item{
+    display:flex;align-items:center;gap:12px;
+    padding:11px 0;border-bottom:1px solid var(--panel-line);
+    cursor:pointer;user-select:none;
+  }
+  .chk-item:last-child{border-bottom:none;}
+  .chk-box{
+    width:22px;height:22px;border-radius:6px;flex:0 0 auto;
+    border:2px solid var(--panel-line);
+    display:flex;align-items:center;justify-content:center;
+    font-size:14px;color:transparent;
+    transition:all .15s ease;
+  }
+  .chk-item.done .chk-box{background:var(--green);border-color:var(--green);color:#fff;}
+  .chk-item.done .chk-label{color:var(--text-soft);text-decoration:line-through;}
+  .chk-label{font-size:14px;}
+  .chk-status{font-size:11px;color:var(--text-soft);font-family:'IBM Plex Mono',monospace;padding:0 16px;}
+
+  footer{
+    text-align:center;padding:30px 16px 10px;
+    font-size:11px;color:var(--text-faint,#5d7492);line-height:1.7;
+  }
+
+  /* copy toast */
+  .toast{
+    position:fixed;left:50%;bottom:24px;transform:translate(-50%,20px);
+    background:#fff;color:#111;padding:10px 18px;border-radius:30px;
+    font-size:13px;opacity:0;pointer-events:none;transition:all .25s ease;
+    box-shadow:0 8px 24px rgba(0,0,0,0.3);
+    z-index:99;
+  }
+  .toast.show{opacity:1;transform:translate(-50%,0);}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <div class="hero">
+    <div class="eyebrow">Seoul · 2026.09.03 → 09.07</div>
+    <h1>首爾五日<br>輕旅行</h1>
+    <p>5 晚同一住處 · 驛三洞出發，行程可隨心切換</p>
+    <div class="daynav" id="daynav">
+      <button class="badge-btn b-gray" data-target="day1"><span class="badge">1</span><span class="lbl">9/3 抵達</span></button>
+      <button class="badge-btn b-green" data-target="day2"><span class="badge">2</span><span class="lbl">9/4 聖水</span></button>
+      <button class="badge-btn b-orange" data-target="day3"><span class="badge">3</span><span class="lbl">9/5 古宮</span></button>
+      <button class="badge-btn b-yellow" data-target="day4"><span class="badge">4</span><span class="lbl">9/6 狎鷗亭</span></button>
+      <button class="badge-btn b-blue" data-target="day5"><span class="badge">5</span><span class="lbl">9/7 回國</span></button>
+    </div>
+  </div>
+
+  <div class="mode-row">
+    <div class="txt">行程模式：<b id="modeLabel">建議動線</b></div>
+    <div class="switch" id="modeToggle"></div>
+  </div>
+
+  <!-- FLIGHT TICKET -->
+  <div class="card">
+    <div class="card-head">✈️ 航班資訊</div>
+    <div class="card-sub">預約編號 E4KNUS（去程）</div>
+    <div class="ticket-body">
+      <div class="stub">
+        <span class="tag">折扣票</span>
+        <div class="route">
+          <div><div class="code">TSA</div><div class="city">台北松山</div></div>
+          <div class="arrow">✈ 2h25m ✈</div>
+          <div style="text-align:right"><div class="code">GMP</div><div class="city">首爾金浦</div></div>
+        </div>
+        <div class="meta">
+          <div>日期<b>09/03（四）</b></div>
+          <div>起飛<b>14:00</b></div>
+          <div>抵達<b>17:25</b></div>
+          <div>機型<b>ZE888</b></div>
+        </div>
+      </div>
+      <div class="stub">
+        <span class="tag" style="background:rgba(0,144,210,.12);color:#0a6fa0;">已確認</span>
+        <div class="route">
+          <div><div class="code">GMP</div><div class="city">首爾金浦</div></div>
+          <div class="arrow">✈ 2h40m ✈</div>
+          <div style="text-align:right"><div class="code">TSA</div><div class="city">台北松山</div></div>
+        </div>
+        <div class="meta">
+          <div>日期<b>09/07（一）</b></div>
+          <div>起飛<b>11:20</b></div>
+          <div>抵達<b>13:00</b></div>
+          <div>機型<b>TW667</b></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STAY -->
+  <div class="card">
+    <div class="card-head">🏠 住宿（5 晚同一處）</div>
+    <div class="stay-body">
+      <div class="stay-addr">35 Yeoksam-ro 17-gil, 402호<br>Seoul 06245, South Korea</div>
+      <div class="stay-row">
+        <a class="pill-btn" id="mapBtn" href="#" target="_blank" rel="noopener">📍 開啟地圖</a>
+        <a class="pill-btn" href="tel:+821096589790">📞 房東 +82 10 9658-9790</a>
+        <div class="pill-btn" id="copyBtn">📋 複製地址</div>
+      </div>
+    </div>
+  </div>
+
+  <main id="days">
+
+    <!-- DAY 1 -->
+    <article class="day" id="day1" style="--dot:var(--gray)">
+      <div class="day-head">
+        <div class="badge b-gray-badge" style="background:var(--gray)">1</div>
+        <div class="titles">
+          <div class="date">09/03（四）</div>
+          <div class="title">抵達首爾</div>
+        </div>
+      </div>
+      <ul class="timeline">
+        <li><div class="time">14:00</div><div class="place">松山機場出發</div><div class="tip">ZE888，記得預留報到與安檢時間。</div></li>
+        <li><div class="time">17:25</div><div class="place">抵達金浦機場</div><div class="tip">入境、提行李後，搭機場快線或計程車前往驛三洞，車程約 40–50 分鐘。</div></li>
+        <li><div class="time">18:30</div><div class="place">民宿 Check-in</div><div class="tip">放行李、稍作休息。</div></li>
+        <li><div class="time">19:00</div><div class="place">附近超市＋換錢</div><div class="tip">市區匯率通常比機場好，超商或銀行都能換韓幣。</div></li>
+        <li><div class="time">20:00</div><div class="place">晚餐：辣炒雞爪（닭발）</div><div class="tip">Naver 地圖搜尋「역삼 닭발」，驛三洞、江南站周邊選擇不少。</div></li>
+      </ul>
+      <ul class="flex-list">
+        <li>抵達金浦機場 → 前往民宿</li>
+        <li>超市採買、換錢</li>
+        <li>晚餐吃辣雞爪</li>
+      </ul>
+    </article>
+
+    <!-- DAY 2 -->
+    <article class="day" id="day2" style="--dot:var(--green)">
+      <div class="day-head">
+        <div class="badge" style="background:var(--green);color:#fff">2</div>
+        <div class="titles">
+          <div class="date">09/04（五）</div>
+          <div class="title">聖水洞・吃牛・騎車</div>
+        </div>
+      </div>
+      <ul class="timeline">
+        <li><div class="time">09:30</div><div class="place">出發前往聖水洞</div><div class="tip">地鐵 2 號線，約 25–30 分鐘。</div></li>
+        <li><div class="time">10:00</div><div class="place">聖水洞散策</div><div class="tip">大林倉庫街一帶，舊工廠改造的選品店與咖啡廳很好拍。</div></li>
+        <li><div class="time">12:30</div><div class="place">吃牛午餐</div><div class="tip">「성수일미락」生牛肉專門，或「뚝딱 성수점」投兩顆星等級韓牛＋炭烤阿根廷牛排，營業到凌晨。</div></li>
+        <li><div class="time">14:00</div><div class="place">서울숲租따릉이腳踏車</div><div class="tip">서울숲站、뚝섬站周邊都有租借站，沿한강公園騎行地勢平坦，全家都適合。</div></li>
+        <li><div class="time">19:30</div><div class="place">回民宿，外送宵夜</div><div class="tip">배달의민족 / Coupang Eats 都可以點，記得先設定好地址。</div></li>
+      </ul>
+      <ul class="flex-list">
+        <li>聖水洞散策</li>
+        <li>吃牛午餐</li>
+        <li>서울숲 租腳踏車騎行</li>
+        <li>外送宵夜</li>
+      </ul>
+    </article>
+
+    <!-- DAY 3 -->
+    <article class="day" id="day3" style="--dot:var(--orange)">
+      <div class="day-head">
+        <div class="badge" style="background:var(--orange);color:#fff">3</div>
+        <div class="titles">
+          <div class="date">09/05（六）</div>
+          <div class="title">千年古寺・圖書館・故宮</div>
+        </div>
+      </div>
+      <ul class="timeline">
+        <li><div class="time">09:30</div><div class="place">出發前往봉은사</div><div class="tip">地鐵 9 號線봉은사站，離民宿最近，約 15–20 分鐘。</div></li>
+        <li><div class="time">10:00</div><div class="place">봉은사</div><div class="tip">創建於西元 794 年新羅時代，鬧市高樓中的千年古剎，免門票，逛一圈約 1 小時。</div></li>
+        <li><div class="time">11:00</div><div class="place">別마당圖書館</div><div class="tip">就在코엑스內，跟봉은사幾乎相鄰，走路即到，挑高書牆很壯觀。</div></li>
+        <li><div class="time">12:30</div><div class="place">코엑스美食街午餐</div><div class="tip">選擇多、室內用餐可以順便休息。</div></li>
+        <li><div class="time">13:30</div><div class="place">轉往景福宮</div><div class="tip">地鐵約 40 分鐘，這段路較長，可以在車上休息一下。</div></li>
+        <li><div class="time">14:30</div><div class="place">景福宮＋國立故宮博物館</div><div class="tip">故宮博物館在景福宮西側，免費入場，展品含歷代王室文物。</div></li>
+        <li><div class="time">17:30</div><div class="place">看日落</div><div class="tip">大韓民國歷史博物館 8 樓屋頂庭園，免費開放，可眺望景福宮與北岳山，是不用爬山的私房夕陽點。</div></li>
+      </ul>
+      <ul class="flex-list">
+        <li>봉은사（千年古寺）</li>
+        <li>別마당圖書館</li>
+        <li>景福宮＋國立故宮博物館</li>
+        <li>看日落</li>
+      </ul>
+      <div class="note info">💡 這天橫跨江南到市中心，兩段地鐵移動時間都不短。如果想輕鬆一點，上午봉은사＋圖書館結束後可以先回民宿午休，再視體力決定要不要去故宮。</div>
+    </article>
+
+    <!-- DAY 4 -->
+    <article class="day" id="day4" style="--dot:var(--yellow)">
+      <div class="day-head">
+        <div class="badge" style="background:var(--yellow)">4</div>
+        <div class="titles">
+          <div class="date">09/06（日）</div>
+          <div class="title">變漂亮・狎鷗亭・買貝果</div>
+        </div>
+      </div>
+      <ul class="timeline">
+        <li><div class="time">09:00</div><div class="place">出發前往 BLANCJOU</div><div class="tip">新論峴站附近，江南大路69街8號3樓，療程前建議提早15分鐘到。</div></li>
+        <li><div class="time">10:00</div><div class="place">療程開始</div><div class="tip">除皺、超聲刀+熱瑪吉+LDM、皮秒雷射、麗珠蘭，項目較多，預估需要 3–4 小時。</div></li>
+        <li><div class="time">14:00</div><div class="place">療程結束、就近休息</div><div class="tip">先找安靜咖啡廳坐一下，避免立刻曝曬或劇烈活動。</div></li>
+        <li><div class="time">15:30</div><div class="place">前往狎鷗亭羅德奧</div><div class="tip">압구정로데오站，療程後走路慢慢逛就好。</div></li>
+        <li><div class="time">16:00</div><div class="place">런던베이글뮤지엄 도산店買貝果</div><div class="tip">假日排隊非常誇張，建議先用캐치테이블／테이블링線上候位，省下站著等的時間。</div></li>
+        <li><div class="time">20:00</div><div class="place">回民宿，外送宵夜</div><div class="tip">術後這天盡量不要太晚在外面吹風。</div></li>
+      </ul>
+      <ul class="flex-list">
+        <li>BLANCJOU 療程（約3–4小時）</li>
+        <li>狎鷗亭羅德奧散步</li>
+        <li>런던베이글뮤지엄買貝果</li>
+        <li>外送宵夜</li>
+      </ul>
+
+      <div class="receipt">
+        <div class="rh"><b>BLANCJOU 預約單</b><span>2026.09.06 10:00</span></div>
+        <ul>
+          <li>訂購人<b>Tai Ju Chun</b></li>
+          <li>除皺（德國西馬）×2部位<b>110,000₩</b></li>
+          <li>超聲刀300+熱瑪吉900+LDM<b>3,240,000₩</b></li>
+          <li>皮秒美白雷射<b>79,000₩</b></li>
+          <li>全臉／眼周 麗珠蘭<b>630,000₩</b></li>
+        </ul>
+        <div class="total"><span>含稅總額</span><span>4,464,900 ₩</span></div>
+      </div>
+      <div class="note">⚠️ 術後保養提醒：24 小時內避免高溫（三溫暖、烤箱）、按摩、飲酒。這天行程盡量安排室內活動，別讓臉一直曬太陽。</div>
+    </article>
+
+    <!-- DAY 5 -->
+    <article class="day" id="day5" style="--dot:var(--blue)">
+      <div class="day-head">
+        <div class="badge" style="background:var(--blue);color:#fff">5</div>
+        <div class="titles">
+          <div class="date">09/07（一）</div>
+          <div class="title">回國</div>
+        </div>
+      </div>
+      <ul class="timeline">
+        <li><div class="time">08:00</div><div class="place">民宿退房</div><div class="tip">確認房間、冰箱、插座沒有遺漏物品。</div></li>
+        <li><div class="time">08:15</div><div class="place">出發前往金浦機場</div><div class="tip">建議預留 2 小時，含報到與安檢。</div></li>
+        <li><div class="time">11:20</div><div class="place">TW667 起飛</div><div class="tip">已確認的回程航班。</div></li>
+        <li><div class="time">13:00</div><div class="place">抵達台北松山機場</div><div class="tip">旅程結束，歡迎回家！</div></li>
+      </ul>
+      <ul class="flex-list">
+        <li>民宿退房</li>
+        <li>前往金浦機場</li>
+        <li>TW667 飛回台北</li>
+      </ul>
+    </article>
+
+  </main>
+
+  <!-- CHECKLIST -->
+  <div class="card">
+    <div class="card-head">🎒 行前待辦</div>
+    <div class="card-sub">點一下打勾，會自動記住勾選狀態</div>
+    <div class="checklist-body" id="checklist"></div>
+  </div>
+
+  <footer>
+    行程時間、店家資訊為建議參考，出發前請以 Naver 地圖／官方公告的即時營業狀況為準。<br>
+    祝旅途順利 ✈️
+  </footer>
+
+</div>
+
+<div class="toast" id="toast">已複製地址</div>
+
+<script>
+(function(){
+  var ADDRESS = "35 Yeoksam-ro 17-gil, 402ho, Seoul 06245, South Korea";
+  document.getElementById('mapBtn').href = "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(ADDRESS);
+
+  document.getElementById('copyBtn').addEventListener('click', function(){
+    var showToast = function(){
+      var t = document.getElementById('toast');
+      t.classList.add('show');
+      setTimeout(function(){ t.classList.remove('show'); }, 1600);
+    };
+    if(navigator.clipboard){
+      navigator.clipboard.writeText(ADDRESS).then(showToast).catch(showToast);
+    } else { showToast(); }
+  });
+
+  // day nav scroll
+  document.querySelectorAll('.badge-btn').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var el = document.getElementById(btn.dataset.target);
+      if(el) el.scrollIntoView({behavior:'smooth', block:'start'});
+    });
+  });
+
+  // mode toggle (suggested vs flexible), persisted
+  var modeToggle = document.getElementById('modeToggle');
+  var modeLabel = document.getElementById('modeLabel');
+  function setMode(flexible){
+    document.body.classList.toggle('flexible', flexible);
+    modeToggle.classList.toggle('on', flexible);
+    modeLabel.textContent = flexible ? '彈性版' : '建議動線';
+  }
+  modeToggle.addEventListener('click', function(){
+    var flexible = !document.body.classList.contains('flexible');
+    setMode(flexible);
+    if(window.storage){
+      window.storage.set('itinerary-mode', flexible ? 'flexible' : 'suggested', false).catch(function(){});
+    }
+  });
+  (async function initMode(){
+    try{
+      if(window.storage){
+        var r = await window.storage.get('itinerary-mode');
+        setMode(r && r.value === 'flexible');
+      }
+    }catch(e){ /* no saved value yet */ }
+  })();
+
+  // checklist
+  var ITEMS = [
+    {id:'passport', label:'護照＋機票確認'},
+    {id:'cash', label:'換好韓幣現金'},
+    {id:'meds', label:'常備藥／私人藥品'},
+    {id:'adapter', label:'轉接頭／充電線'},
+    {id:'aftercare', label:'療程後保養品（棉柔巾、防曬）'},
+    {id:'jacket', label:'秋天外套（早晚溫差大）'},
+    {id:'umbrella', label:'雨具'},
+    {id:'catchtable', label:'先申請캐치테이블排런던베이글隊'}
+  ];
+  var listEl = document.getElementById('checklist');
+  var state = {};
+
+  function render(){
+    listEl.innerHTML = '';
+    ITEMS.forEach(function(item){
+      var row = document.createElement('div');
+      row.className = 'chk-item' + (state[item.id] ? ' done' : '');
+      row.innerHTML = '<div class="chk-box">✓</div><div class="chk-label">'+item.label+'</div>';
+      row.addEventListener('click', function(){
+        state[item.id] = !state[item.id];
+        row.classList.toggle('done', state[item.id]);
+        row.querySelector('.chk-box').style.color = state[item.id] ? '#fff' : 'transparent';
+        save();
+      });
+      listEl.appendChild(row);
+    });
+  }
+
+  function save(){
+    if(window.storage){
+      window.storage.set('packing-checklist', JSON.stringify(state), false).catch(function(){});
+    }
+  }
+
+  (async function initChecklist(){
+    try{
+      if(window.storage){
+        var r = await window.storage.get('packing-checklist');
+        if(r && r.value){ state = JSON.parse(r.value); }
+      }
+    }catch(e){ /* nothing saved yet */ }
+    render();
+  })();
+})();
+</script>
+
+</body>
+</html>
